@@ -15,7 +15,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Henrik Hautakoski",
     author_email="henrik@eossweden.org",
-    url="https://github.com/eossweden/buildbot-GitHubAPI",
+    url="https://github.com/eosswedenorg/buildbot-GitHubAPI",
     packages=[
         "src",
     ],
