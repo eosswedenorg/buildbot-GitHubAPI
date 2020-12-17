@@ -19,7 +19,7 @@ setup(
     packages=[
         "src",
     ],
-    requires=["Buildbot (>=2.6.0)"],
+    requires=["Buildbot (>=2.8.0)"],
     entry_points={
         "buildbot.changes": [
             "GitHubAPI = src.githubapi:GitHubAPI"
