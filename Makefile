@@ -43,4 +43,5 @@ upload-test:
 	$(TWINE) upload --repository testpypi dist/*
 
 test:
+	$(SETUPTOOLS) install -f
 	$(TRIAL) src/tests/test_githubapi.py
