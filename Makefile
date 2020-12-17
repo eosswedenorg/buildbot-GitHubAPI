@@ -17,6 +17,12 @@ $(VENV_NAME) :
 virtualenv: $(VENV_NAME)
 	@echo . $(VENV_NAME)/bin/activate
 
+build:
+	$(SETUPTOOLS) build
+
+install:
+	$(SETUPTOOLS) install
+
 dist-build:
 	rm -f dist/*
 	$(SETUPTOOLS) sdist --formats $(PACKAGE_FORMATS) bdist_wheel
