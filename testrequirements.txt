@@ -1,2 +1,2 @@
 --no-binary :all:
-buildbot[test]
+buildbot[test]~=2.8.0
