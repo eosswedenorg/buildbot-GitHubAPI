@@ -24,7 +24,7 @@ install: upgrade-pip
 	$(PIP) install -r requirements.txt
 
 install-test: upgrade-pip
-	$(PIP) install -r testrequirements.txt
+	$(PIP) install -r requirements-test.txt
 
 upload:
 	python3 -m twine upload --repository pypi dist/*
