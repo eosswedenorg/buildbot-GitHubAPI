@@ -1,5 +1,5 @@
 
-.PHONY: build test install install-test upgrade-pip upload upload-test
+.PHONY: build install test dep-install dep-install-test upgrade-pip upload upload-test
 
 VENV_PY_VERSION ?= python3
 VENV_NAME := .venv$(VENV_PY_VERSION)
