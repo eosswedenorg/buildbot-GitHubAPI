@@ -24,10 +24,10 @@ dist-build:
 upgrade-pip:
 	$(PYTHON) -m pip install --upgrade pip
 
-install: upgrade-pip
+dep-install: upgrade-pip
 	$(PIP) install -r requirements.txt
 
-install-test: upgrade-pip
+dep-install-test: upgrade-pip
 	$(PIP) install -r requirements-test.txt
 
 upload:
