@@ -1,5 +1,5 @@
 
-.PHONY: build test install install-test upload upload-test
+.PHONY: build test install install-test upgrade-pip upload upload-test
 
 VENV_PY_VERSION ?= python3
 VENV_NAME := .venv$(VENV_PY_VERSION)
@@ -17,11 +17,13 @@ dist-build:
 	rm -f dist/*
 	python3 setup.py sdist --formats $(PACKAGE_FORMATS) bdist_wheel
 
-install:
+upgrade-pip:
 	$(VENV_PY_VERSION) -m pip install --upgrade pip
+
+install: upgrade-pip
 	$(PIP) install -r requirements.txt
 
-install-test: install
+install-test: upgrade-pip
 	$(PIP) install -r testrequirements.txt
 
 upload:
