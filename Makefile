@@ -5,6 +5,8 @@ VENV_PY_VERSION ?= python3
 VENV_NAME := .venv$(VENV_PY_VERSION)
 
 PYTHON := python
+SETUPTOOLS := $(PYTHON) setup.py
+TWINE := $(PYTHON) -m twine
 TRIAL := trial
 PIP=pip3
 PACKAGE_FORMATS=gztar
@@ -17,7 +19,7 @@ virtualenv: $(VENV_NAME)
 
 dist-build:
 	rm -f dist/*
-	$(PYTHON) setup.py sdist --formats $(PACKAGE_FORMATS) bdist_wheel
+	$(SETUPTOOLS) sdist --formats $(PACKAGE_FORMATS) bdist_wheel
 
 upgrade-pip:
 	$(PYTHON) -m pip install --upgrade pip
@@ -29,10 +31,10 @@ install-test: upgrade-pip
 	$(PIP) install -r requirements-test.txt
 
 upload:
-	$(PYTHON) -m twine upload --repository pypi dist/*
+	$(TWINE) upload --repository pypi dist/*
 
 upload-test:
-	$(PYTHON) -m twine upload --repository testpypi dist/*
+	$(TWINE) upload --repository testpypi dist/*
 
 test:
 	$(TRIAL) src/tests/test_githubapi.py
