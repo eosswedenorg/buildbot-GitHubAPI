@@ -130,5 +130,6 @@ class GitHubAPI(base.ReconfigurablePollingChangeSource, StateMixin) :
         result = yield self._http.get(self.getApiUri(self.owner, self.repo, "releases"))
         releases = yield result.json()
         for release in releases :
-            if self._cache(release["id"]) :
+            # Process release if it did not exist in cache.
+            if not (yield self._cache(release["id"])) :
                 yield self._processRelease(release)
