@@ -60,10 +60,16 @@ class GitHubAPI(base.ReconfigurablePollingChangeSource, StateMixin) :
         yield self._getReleases()
 
     @defer.inlineCallbacks
+    def _getStateObjectId(self):
+        r = yield self.master.db.state.getObjectId('{}/{}'.format(self.owner, self.repo),
+                                                        self.db_class_name)
+        return r
+
+    @defer.inlineCallbacks
     def _cache(self, id, type="release") :
         state = self.master.db.state
         cache_id = '%s-%d' % (type, id)
-        object_id = yield state.getObjectId('{}/{}'.format(self.owner, self.repo), self.db_class_name)
+        object_id = yield self._getStateObjectId()
 
         hit = yield state.getState(object_id, cache_id, False)
         if not hit :
