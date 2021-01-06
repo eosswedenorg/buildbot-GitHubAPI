@@ -38,6 +38,9 @@ class GitHubAPI(base.ReconfigurablePollingChangeSource, StateMixin) :
         # HTTP
         self.baseurl = kwargs.get("baseurl", self.baseurl)
 
+        # Number of releases
+        self.num_release = kwargs.get("num_releases")
+
         # Headers
         http_headers = {'User-Agent': 'Buildbot'}
         if token is not None:
@@ -49,10 +52,13 @@ class GitHubAPI(base.ReconfigurablePollingChangeSource, StateMixin) :
     def describe(self):
         return ("{} watching the GitHub repository {}/{}").format(self.__class__.__name__, self.owner, self.repo)
 
-    def getApiUri(self, owner, repo, resource=None) :
+    def getApiUri(self, owner, repo, resource=None, **params) :
         uri = "/repos/{0}/{1}".format(owner, repo)
+        params = {k:v for k,v in params.items() if v}
         if resource :
             uri += '/' + resource
+        if len(params) > 0 :
+            uri += '?' + '&'.join('{}={}'.format(k,v) for k,v in params.items())
         return uri
 
     @defer.inlineCallbacks
@@ -133,7 +139,7 @@ class GitHubAPI(base.ReconfigurablePollingChangeSource, StateMixin) :
 
     @defer.inlineCallbacks
     def _getReleases(self):
-        result = yield self._http.get(self.getApiUri(self.owner, self.repo, "releases"))
+        result = yield self._http.get(self.getApiUri(self.owner, self.repo, "releases", per_page=self.num_release))
         releases = yield result.json()
         for release in releases :
             # Process release if it did not exist in cache.
